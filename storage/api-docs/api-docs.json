@@ -1,0 +1,322 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel OpenApi Documentation",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "shahriyar.bayat@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/",
+            "description": "review test api lists"
+        },
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "login user using email and password",
+                "description": "login user using email and password",
+                "operationId": "login user using email and password",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "text",
+                                        "format": "text",
+                                        "example": "admin@admin.com"
+                                    },
+                                    "password": {
+                                        "type": "hidden",
+                                        "format": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "422": {
+                        "description": "error"
+                    },
+                    "401": {
+                        "description": "not authenticate"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "get all products",
+                "description": "get all products",
+                "operationId": "get all products",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/products"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/api/product/{product}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "get product by slug",
+                "description": "get product by slug",
+                "operationId": "get product by slug",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "product slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "محصول-تست"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/api/product/{product}/vote": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "save new vote",
+                "description": "save new vote",
+                "operationId": "save new vote",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "vote"
+                                ],
+                                "properties": {
+                                    "vote": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/vote"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/vote"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "not authenticate",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/vote"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/product/{product}/comment": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "save new comment",
+                "description": "save new comment",
+                "operationId": "save new comment",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "subject",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "subject": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "عنوان کامنت"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "متن پیام"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/comment"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/comment"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "not authenticate",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/api/product/{product}/comment"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
